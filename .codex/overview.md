@@ -309,57 +309,6 @@ agents.md                    # (see below)
 CHANGELOG.md
 ```
 
-.breadcrumbs/                 # example sample data for e2e tests
-.vscode/
-settings.json               # enable recommended extensions and format on save
-.github/
-workflows/ci.yml
-scripts/
-check-breadcrumbs.mjs       # hook entry
-install-git-hooks.mjs       # writes .git/hooks/*
-src/
-extension.ts                # activation, command registration
-commands/
-addNote.ts
-peekAtCursor.ts
-openNotebook.ts
-gotoTarget.ts
-search.ts
-refreshIndex.ts
-validate.ts
-notebook/
-NotebookPanel.ts          # webview + message protocol
-NotebookIndex.ts          # caching/indexing/backlinks
-model/
-Note.ts
-Index.ts
-Anchors.ts                # drift detection strategies
-Types.ts                  # shared types; strict typings
-providers/
-PeekProvider.ts
-ContentProvider.ts
-utils/
-fs.ts
-git.ts
-hashing.ts
-logging.ts
-cli/
-main.ts                   # `breadcrumbs` CLI for validate/search/fix
-test/
-unit/
-integration/
-fixtures/
-package.json
-tsconfig.json
-.eslintrc.cjs
-.prettierrc
-.breadcrumbsrc.json           # default config template
-README.md
-agents.md                    # (see below)
-CHANGELOG.md
-
-````
-
 ---
 
 ## 8) agents.md (Process & Quality Gates)
