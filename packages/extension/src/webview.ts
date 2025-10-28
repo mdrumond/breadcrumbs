@@ -10,12 +10,18 @@ export async function renderTrailPanel(panel: import('vscode').WebviewPanel, tra
   const core = await getCoreModule();
   const summary = core.formatTrailSummary(core.summarizeTrail(trail));
   const tableRows = trail.nodes
-    .map(
-      (node, index) =>
-        `<tr><td>${index + 1}</td><td>${escapeHtml(node.label)}</td><td>${node.timestamp ?? ''}</td><td>${
-          node.tags?.join(', ') ?? ''
-        }</td><td>${escapeHtml(node.description ?? '')}</td></tr>`
-    )
+    .map((node, index) => {
+      const escapedTags = node.tags?.map(escapeHtml).join(', ') ?? '';
+      return [
+        '<tr>',
+        `<td>${index + 1}</td>`,
+        `<td>${escapeHtml(node.label)}</td>`,
+        `<td>${node.timestamp ?? ''}</td>`,
+        `<td>${escapedTags}</td>`,
+        `<td>${escapeHtml(node.description ?? '')}</td>`,
+        '</tr>'
+      ].join('');
+    })
     .join('\n');
   panel.webview.html = `<!DOCTYPE html>
 <html lang="en">

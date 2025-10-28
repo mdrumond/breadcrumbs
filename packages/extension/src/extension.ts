@@ -11,7 +11,7 @@ import { renderTrailPanel } from './webview.js';
  * @param context - Extension context supplied by VS Code.
  */
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-  const examplesDirectory = path.join(context.extensionPath, '../../.breadcrumbs/examples');
+  const examplesDirectory = path.join(context.extensionPath, '.breadcrumbs/examples');
   const store = new TrailStore(examplesDirectory);
   await store.refresh();
 
