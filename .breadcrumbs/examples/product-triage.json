@@ -1,0 +1,42 @@
+{
+  "id": "product-triage",
+  "title": "Product Triage Walkthrough",
+  "description": "Review errors reported in the staging environment and capture mitigations.",
+  "createdAt": "2024-12-02T09:00:00.000Z",
+  "updatedAt": "2024-12-02T09:45:00.000Z",
+  "nodes": [
+    {
+      "id": "collect-alerts",
+      "label": "Collect Alerts",
+      "description": "Open the alert dashboard and export the most recent incidents.",
+      "timestamp": "2024-12-02T09:05:00.000Z",
+      "tags": ["alerts", "dashboard"],
+      "metadata": {
+        "alerts": 5,
+        "source": "PagerDuty"
+      }
+    },
+    {
+      "id": "cluster-errors",
+      "label": "Cluster Incidents",
+      "description": "Group incidents by service and severity to spot patterns.",
+      "timestamp": "2024-12-02T09:15:00.000Z",
+      "tags": ["analysis"],
+      "metadata": {
+        "services": ["payments", "notifications"],
+        "critical": 1
+      }
+    },
+    {
+      "id": "draft-actions",
+      "label": "Draft Mitigations",
+      "description": "Outline mitigation steps and assign owners in the triage document.",
+      "timestamp": "2024-12-02T09:30:00.000Z",
+      "tags": ["mitigation", "planning"],
+      "metadata": {
+        "owners": ["Morgan", "Kai"],
+        "eta": "2024-12-02T18:00:00.000Z"
+      }
+    }
+  ]
+}

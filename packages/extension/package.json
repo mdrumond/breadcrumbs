@@ -1,0 +1,53 @@
+{
+  "name": "breadcrumbs-extension",
+  "displayName": "Breadcrumbs Explorer",
+  "publisher": "breadcrumbs",
+  "version": "0.0.0",
+  "description": "Visualize breadcrumb trails inside VS Code.",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [
+    "onCommand:breadcrumbs.openTrailPanel",
+    "onCommand:breadcrumbs.openSampleNotebook",
+    "onCommand:breadcrumbs.peekTrailNode",
+    "onView:breadcrumbsExplorer"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "breadcrumbs.openTrailPanel",
+        "title": "Breadcrumbs: Open Trail Panel"
+      },
+      {
+        "command": "breadcrumbs.openSampleNotebook",
+        "title": "Breadcrumbs: Open Sample Notebook"
+      },
+      {
+        "command": "breadcrumbs.peekTrailNode",
+        "title": "Breadcrumbs: Peek Trail Node"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "breadcrumbsExplorer",
+          "name": "Breadcrumbs Explorer"
+        }
+      ]
+    },
+    "notebooks": [
+      {
+        "type": "breadcrumbsTrail",
+        "displayName": "Breadcrumb Trail",
+        "fileExtensions": [".crumbnb"]
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "clean": "rimraf dist"
+  }
+}

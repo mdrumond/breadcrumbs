@@ -1,0 +1,15 @@
+node_modules
+coverage
+dist
+*.log
+.vscode-test
+.vscode-test-web
+.DS_Store
+*.vsix
+
+# Generated workspace artifacts
+packages/**/out
+packages/**/dist
+
+# npm debug logs
+npm-debug.log*

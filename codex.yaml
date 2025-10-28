@@ -1,0 +1,22 @@
+setup:
+  steps:
+    - corepack enable
+    - npm set fund false
+    - npm set audit false
+    - npm config set fund false
+    - npm config set audit false
+
+# guardrails enforced by the agent
+generation:
+  constraints:
+    types: true
+    docstrings: true
+    lint: true
+    tests: true
+    maxFileLength: 800
+  tasks:
+    - scaffold-workspace
+    - implement-shared-core
+    - deliver-cli
+    - deliver-extension
+    - finalize-quality

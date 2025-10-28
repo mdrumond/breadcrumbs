@@ -1,0 +1,15 @@
+{
+  "name": "@breadcrumbs/cli",
+  "version": "0.0.0",
+  "description": "Command line utilities for inspecting breadcrumb trails.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "breadcrumbs": "dist/bin.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist"
+  }
+}
