@@ -1,0 +1,27 @@
+{
+  "name": "breadcrumbs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Developer tooling for visualizing and exploring breadcrumb trails via CLI and VS Code extension.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "build:core": "tsc --build packages/core/tsconfig.json",
+    "build:cli": "tsc --build packages/cli/tsconfig.json",
+    "build:extension": "tsc --build packages/extension/tsconfig.json",
+    "clean": "tsc --build tsconfig.json --clean && rm -rf coverage",
+    "format": "prettier --write .",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --experimental-strip-types --test",
+    "test:watch": "node --experimental-strip-types --test --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "verify": "npm run lint && npm run typecheck && npm run test"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
