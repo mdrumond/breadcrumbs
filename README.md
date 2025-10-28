@@ -42,6 +42,30 @@ code --install-extension dist/breadcrumbs-extension.vsix
 
 Alternatively, use the **Extensions: Install from VSIX...** command inside VS Code and select the generated `dist/breadcrumbs-extension.vsix` file.
 
+### Installing and running the CLI
+
+Build the CLI workspace, then execute the generated binary with `npm exec` or `node`:
+
+```bash
+# Compile only the CLI package
+npm run build:cli
+
+# Run the CLI with npm exec (recommended)
+npm exec --workspace @breadcrumbs/cli breadcrumbs -- --help
+
+# Or invoke the compiled entrypoint directly
+node packages/cli/dist/bin.js /path/to/trail.crumb
+```
+
+To make the command available globally for local testing, link the workspace package once after building:
+
+```bash
+npm link --workspace @breadcrumbs/cli
+
+# breadcrumbs is now on your PATH
+breadcrumbs summarize /path/to/trail.crumb
+```
+
 ### Git hooks
 
 Enable the provided pre-commit hook to automatically run `npm run verify` before each commit:
