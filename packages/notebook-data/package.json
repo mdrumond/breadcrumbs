@@ -17,6 +17,6 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@breadcrumbs/core": "workspace:*"
+    "@breadcrumbs/core": "0.0.0"
   }
 }

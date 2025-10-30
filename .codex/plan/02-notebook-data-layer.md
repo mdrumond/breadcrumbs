@@ -16,6 +16,7 @@ Provide the core libraries for managing breadcrumb notes, chains, and the index 
 - ✅ Implemented an index manager that rebuilds `index.json`, tracks file signatures for caching, computes backlinks, and stamps a checksum for integrity verification. 【F:packages/notebook-data/src/indexManager.ts†L1-L161】
 - ✅ Delivered snippet hashing, Git commit anchoring, and conflict detection helpers used by higher-level workflows. 【F:packages/notebook-data/src/hash.ts†L1-L4】【F:packages/notebook-data/src/conflicts.ts†L1-L33】
 - ✅ Documented the data layer in the README and expanded examples to cover every supported node kind. 【F:README.md†L11-L55】【F:.breadcrumbs/examples/all-node-kinds.crumbnb†L1-L39】
+- ✅ Updated workspace packaging to depend on the published core version range so CI environments without `workspace:` protocol support can install successfully. 【F:packages/notebook-data/package.json†L1-L22】
 
 ## Follow-ups
 - Wire the CLI and extension flows to the new `@breadcrumbs/notebook-data` APIs so user actions persist notes and chains through the shared layer.
