@@ -1,12 +1,11 @@
-import assert from 'node:assert/strict';
-import test from 'node:test';
+import { describe, expect, it } from 'vitest';
 import {
   parseBreadcrumbTrail,
   summarizeTrail,
   formatTrailSummary,
   trailToMarkdown,
   trailToNotebook
-} from '../index.ts';
+} from '../../dist/index.js';
 
 const sampleTrail = parseBreadcrumbTrail({
   id: 'demo',
@@ -30,35 +29,47 @@ const sampleTrail = parseBreadcrumbTrail({
   ]
 });
 
-test('parseBreadcrumbTrail rejects invalid input', () => {
-  assert.throws(() => parseBreadcrumbTrail(null));
-  assert.throws(() => parseBreadcrumbTrail({ id: '', title: 'oops', nodes: [] }));
-  assert.throws(() =>
-    parseBreadcrumbTrail({ id: 'demo', title: 'bad', nodes: [{ id: 'n1', label: 42 }] as unknown })
-  );
+describe('parseBreadcrumbTrail', () => {
+  it('rejects invalid input', () => {
+    expect(() => parseBreadcrumbTrail(null as unknown)).toThrow();
+    expect(() => parseBreadcrumbTrail({ id: '', title: 'oops', nodes: [] })).toThrow();
+    expect(() =>
+      parseBreadcrumbTrail({
+        id: 'demo',
+        title: 'bad',
+        nodes: [{ id: 'n1', label: 42 } as unknown]
+      })
+    ).toThrow();
+  });
 });
 
-test('summarizeTrail reports timing and tags', () => {
-  const summary = summarizeTrail(sampleTrail);
-  assert.equal(summary.totalNodes, 2);
-  assert.equal(summary.tags.length, 3);
-  assert.equal(summary.durationMs, 5 * 60 * 1000);
-  const summaryText = formatTrailSummary(summary);
-  assert(summaryText.includes('2 steps'));
-  assert(summaryText.includes('300s duration'));
+describe('summarizeTrail', () => {
+  it('reports timing and tags', () => {
+    const summary = summarizeTrail(sampleTrail);
+    expect(summary.totalNodes).toBe(2);
+    expect(summary.tags.length).toBe(3);
+    expect(summary.durationMs).toBe(5 * 60 * 1000);
+    const summaryText = formatTrailSummary(summary);
+    expect(summaryText).toContain('2 steps');
+    expect(summaryText).toContain('300s duration');
+  });
 });
 
-test('trailToMarkdown renders metadata', () => {
-  const markdown = trailToMarkdown(sampleTrail);
-  assert(markdown.includes('# Demo Trail'));
-  assert(markdown.includes('```json'));
-  assert(markdown.includes('severity'));
+describe('trailToMarkdown', () => {
+  it('renders metadata', () => {
+    const markdown = trailToMarkdown(sampleTrail);
+    expect(markdown).toContain('# Demo Trail');
+    expect(markdown).toContain('```json');
+    expect(markdown).toContain('severity');
+  });
 });
 
-test('trailToNotebook produces cells', () => {
-  const notebook = trailToNotebook(sampleTrail);
-  assert.equal(notebook.title, 'Demo Trail');
-  assert.equal(notebook.cells.length, 2);
-  assert.equal(notebook.cells[0].kind, 'markdown');
-  assert.equal(notebook.cells[1].kind, 'code');
+describe('trailToNotebook', () => {
+  it('produces cells', () => {
+    const notebook = trailToNotebook(sampleTrail);
+    expect(notebook.title).toBe('Demo Trail');
+    expect(notebook.cells.length).toBe(2);
+    expect(notebook.cells[0].kind).toBe('markdown');
+    expect(notebook.cells[1].kind).toBe('code');
+  });
 });

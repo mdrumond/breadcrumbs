@@ -1,6 +1,6 @@
 import path from 'node:path';
 import * as vscode from 'vscode';
-import type { BreadcrumbTrail } from '../../core/src/types.ts';
+import type { BreadcrumbTrail } from '../../core/src/types.js';
 import { BreadcrumbNotebookSerializer } from './notebookSerializer.js';
 import { TrailStore } from './trailStore.js';
 import { TrailTreeDataProvider } from './treeDataProvider.js';
@@ -16,11 +16,15 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   await store.refresh();
 
   const treeProvider = new TrailTreeDataProvider(store);
-  context.subscriptions.push(vscode.window.registerTreeDataProvider('breadcrumbsExplorer', treeProvider));
+  context.subscriptions.push(
+    vscode.window.registerTreeDataProvider('breadcrumbsExplorer', treeProvider)
+  );
 
   const notebookSerializer = new BreadcrumbNotebookSerializer();
   context.subscriptions.push(
-    vscode.workspace.registerNotebookSerializer('breadcrumbsTrail', notebookSerializer, { transientOutputs: true })
+    vscode.workspace.registerNotebookSerializer('breadcrumbsTrail', notebookSerializer, {
+      transientOutputs: true
+    })
   );
 
   context.subscriptions.push(
@@ -36,9 +40,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         vscode.window.showErrorMessage('Trail could not be loaded.');
         return;
       }
-      const panel = vscode.window.createWebviewPanel('breadcrumbsTrail', entry.trail.title, vscode.ViewColumn.Beside, {
-        enableScripts: false
-      });
+      const panel = vscode.window.createWebviewPanel(
+        'breadcrumbsTrail',
+        entry.trail.title,
+        vscode.ViewColumn.Beside,
+        {
+          enableScripts: false
+        }
+      );
       await renderTrailPanel(panel, entry.trail);
     })
   );
@@ -47,10 +56,15 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand('breadcrumbs.openSampleNotebook', async () => {
       const notebookFiles = await store.getNotebookFiles();
       if (notebookFiles.length === 0) {
-        vscode.window.showWarningMessage('No .crumbnb notebook files were found in the examples directory.');
+        vscode.window.showWarningMessage(
+          'No .crumbnb notebook files were found in the examples directory.'
+        );
         return;
       }
-      const document = await vscode.workspace.openNotebookDocument('breadcrumbsTrail', notebookFiles[0]);
+      const document = await vscode.workspace.openNotebookDocument(
+        'breadcrumbsTrail',
+        notebookFiles[0]
+      );
       await vscode.window.showNotebookDocument(document, { preview: false });
     })
   );

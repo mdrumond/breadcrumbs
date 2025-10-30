@@ -15,6 +15,10 @@
     "declaration": true,
     "declarationMap": true,
     "outDir": "dist",
-    "types": []
+    "types": [],
+    "paths": {
+      "vitest": ["./packages/vitest"]
+    },
+    "typeRoots": ["./types"]
   }
 }

@@ -1,4 +1,4 @@
-import type * as CoreModule from '../../core/src/index.ts';
+type CoreModule = typeof import('../../core/src/index.js');
 
 let cachedModule: CoreModule | undefined;
 
@@ -14,7 +14,7 @@ export async function getCoreModule(): Promise<CoreModule> {
     cachedModule = (await import('../../core/dist/index.js')) as CoreModule;
   } catch (error) {
     console.warn('Falling back to TypeScript sources for @breadcrumbs/core:', error);
-    cachedModule = await import('../../core/src/index.ts');
+    cachedModule = await import('../../core/src/index.js');
   }
   return cachedModule;
 }

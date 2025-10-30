@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { workspace, Uri, RelativePattern } from 'vscode';
-import type { BreadcrumbTrail, TrailFileDescriptor } from '../../core/src/types.ts';
+import type { BreadcrumbTrail, TrailFileDescriptor } from '../../core/src/types.js';
 import { getCoreModule } from './coreProxy.js';
 
 /**
@@ -57,7 +57,9 @@ export class TrailStore {
    * @returns Ordered list of trail entries.
    */
   getTrails(): TrailEntry[] {
-    return Array.from(this.trailMap.values()).sort((a, b) => a.trail.title.localeCompare(b.trail.title));
+    return Array.from(this.trailMap.values()).sort((a, b) =>
+      a.trail.title.localeCompare(b.trail.title)
+    );
   }
 
   /**

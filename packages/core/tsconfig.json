@@ -4,8 +4,10 @@
     "composite": true,
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["node"]
+    "module": "NodeNext",
+    "types": ["node", "global"]
   },
   "include": ["src"],
+  "exclude": ["src/__tests__"],
   "references": []
 }
