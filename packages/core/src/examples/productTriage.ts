@@ -1,4 +1,4 @@
-import type { BreadcrumbTrail, NotebookDocumentData } from '../types.ts';
+import type { BreadcrumbTrail, NotebookDocumentData } from '../types.js';
 
 /**
  * Breadcrumb trail demonstrating a product triage workflow used across sample assets.

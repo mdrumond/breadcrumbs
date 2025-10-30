@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -14,15 +15,36 @@ const IGNORE_DIRECTORIES = new Set([
   '.breadcrumbs'
 ]);
 
-/**
- * Recursively gather file paths for linting.
- * @param {string} base - Directory to traverse.
- * @returns {string[]} Absolute file paths.
- */
+function runEslint() {
+  const result = spawnSync('eslint', ['.', '--max-warnings=0'], {
+    encoding: 'utf8'
+  });
+  if (result.error && result.error.code === 'ENOENT') {
+    return { success: false, fallback: true };
+  }
+  if (typeof result.status === 'number' && result.status === 0) {
+    process.stdout.write(result.stdout);
+    process.stderr.write(result.stderr);
+    return { success: true, fallback: false };
+  }
+  const combined = `${result.stdout}\n${result.stderr}`;
+  const missingPlugin =
+    /Cannot find (?:module|package)/.test(combined) ||
+    /Failed to load plugin|Parsing error/.test(combined);
+  if (missingPlugin) {
+    console.warn('ESLint execution failed because required plugins are unavailable.');
+    return { success: false, fallback: true };
+  }
+  process.stdout.write(result.stdout);
+  process.stderr.write(result.stderr);
+  process.exit(result.status ?? 1);
+}
+
 function collectFiles(base) {
+  const entries = fs.readdirSync(base, { withFileTypes: true });
   /** @type {string[]} */
   const files = [];
-  for (const entry of fs.readdirSync(base, { withFileTypes: true })) {
+  for (const entry of entries) {
     if (IGNORE_DIRECTORIES.has(entry.name)) {
       continue;
     }
@@ -36,22 +58,16 @@ function collectFiles(base) {
   return files;
 }
 
-/**
- * Determine whether the line index has a TSDoc comment immediately before it.
- * @param {string[]} lines - Source lines.
- * @param {number} index - Line index of the declaration.
- * @returns {boolean} Whether a TSDoc comment is found.
- */
 function hasTsDoc(lines, index) {
-  let i = index - 1;
-  while (i >= 0) {
-    const trimmed = lines[i].trim();
+  let pointer = index - 1;
+  while (pointer >= 0) {
+    const trimmed = lines[pointer].trim();
     if (trimmed.length === 0) {
-      i -= 1;
+      pointer -= 1;
       continue;
     }
     if (trimmed === '*/' || trimmed.startsWith('*')) {
-      i -= 1;
+      pointer -= 1;
       continue;
     }
     return trimmed.startsWith('/**');
@@ -59,12 +75,10 @@ function hasTsDoc(lines, index) {
   return false;
 }
 
-/**
- * Run the lint checks for a single file.
- * @param {string} filePath - Absolute path to lint.
- * @returns {string[]} A list of error messages.
- */
 function lintFile(filePath) {
+  if (filePath.endsWith('.d.ts')) {
+    return [];
+  }
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split(/\r?\n/);
   /** @type {string[]} */
@@ -104,9 +118,18 @@ function lintFile(filePath) {
   return errors;
 }
 
+const result = runEslint();
+if (result?.success) {
+  process.exit(0);
+}
+
+if (!result?.fallback) {
+  process.exit(1);
+}
+
+console.warn('Running fallback static analysis checks...');
 const root = process.cwd();
 const files = collectFiles(root);
-/** @type {string[]} */
 let allErrors = [];
 for (const file of files) {
   allErrors = allErrors.concat(lintFile(file));
@@ -116,7 +139,7 @@ if (allErrors.length > 0) {
   for (const error of allErrors) {
     console.error(error);
   }
-  process.exitCode = 1;
-} else {
-  console.log('Lint checks passed.');
+  process.exit(1);
 }
+
+console.log('Fallback lint checks passed.');

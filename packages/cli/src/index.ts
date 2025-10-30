@@ -1,5 +1,5 @@
 import { basename, resolve } from 'node:path';
-import type { BreadcrumbTrail, TrailFileDescriptor } from '../../core/src/types.ts';
+import type { BreadcrumbTrail, TrailFileDescriptor } from '../../core/src/types.js';
 import {
   findTrailFiles,
   loadBreadcrumbTrail,
@@ -7,7 +7,7 @@ import {
   formatTrailSummary,
   trailToMarkdown,
   parseBreadcrumbTrail
-} from '../../core/src/index.ts';
+} from '../../core/dist/index.js';
 
 /**
  * Resolve a user supplied path relative to the current working directory.

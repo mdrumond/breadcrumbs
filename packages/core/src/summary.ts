@@ -1,4 +1,4 @@
-import type { BreadcrumbTrail, TrailSummary } from './types.ts';
+import type { BreadcrumbTrail, TrailSummary } from './types.js';
 
 /**
  * Build a summary containing aggregated metadata for a breadcrumb trail.
@@ -9,7 +9,9 @@ export function summarizeTrail(trail: BreadcrumbTrail): TrailSummary {
   const timestamps = trail.nodes
     .map((node) => node.timestamp)
     .filter((value): value is string => typeof value === 'string');
-  const parsed = timestamps.map((value) => Date.parse(value)).filter((value) => !Number.isNaN(value));
+  const parsed = timestamps
+    .map((value) => Date.parse(value))
+    .filter((value) => !Number.isNaN(value));
   const first = parsed.length > 0 ? Math.min(...parsed) : undefined;
   const last = parsed.length > 0 ? Math.max(...parsed) : undefined;
   const tags = new Set<string>();

@@ -1,4 +1,4 @@
-import type { BreadcrumbTrail } from '../../core/src/types.ts';
+import type { BreadcrumbTrail } from '../../core/src/types.js';
 import { getCoreModule } from './coreProxy.js';
 
 /**
@@ -6,7 +6,10 @@ import { getCoreModule } from './coreProxy.js';
  * @param panel - Webview panel to populate.
  * @param trail - Trail to visualize.
  */
-export async function renderTrailPanel(panel: import('vscode').WebviewPanel, trail: BreadcrumbTrail): Promise<void> {
+export async function renderTrailPanel(
+  panel: import('vscode').WebviewPanel,
+  trail: BreadcrumbTrail
+): Promise<void> {
   const core = await getCoreModule();
   const summary = core.formatTrailSummary(core.summarizeTrail(trail));
   const tableRows = trail.nodes

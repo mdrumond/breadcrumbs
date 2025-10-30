@@ -5,8 +5,8 @@ export type {
   TrailFileDescriptor,
   NotebookCellData,
   NotebookDocumentData
-} from './types.ts';
-export { parseBreadcrumbTrail, loadBreadcrumbTrail, findTrailFiles } from './parser.ts';
-export { summarizeTrail, formatTrailSummary } from './summary.ts';
-export { trailToMarkdown, trailToNotebook } from './notebook.ts';
-export { productTriageTrail, productTriageNotebook } from './examples/productTriage.ts';
+} from './types.js';
+export { parseBreadcrumbTrail, loadBreadcrumbTrail, findTrailFiles } from './parser.js';
+export { summarizeTrail, formatTrailSummary } from './summary.js';
+export { trailToMarkdown, trailToNotebook } from './notebook.js';
+export { productTriageTrail, productTriageNotebook } from './examples/productTriage.js';
