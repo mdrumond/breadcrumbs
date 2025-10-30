@@ -21,6 +21,7 @@ export function trailToMarkdown(trail: BreadcrumbTrail): string {
   trail.nodes.forEach((node, index) => {
     const position = index + 1;
     lines.push('', `### ${position}. ${node.label}`);
+    lines.push(`- **Kind:** ${node.kind}`);
     if (node.timestamp) {
       lines.push(`- **Timestamp:** ${node.timestamp}`);
     }

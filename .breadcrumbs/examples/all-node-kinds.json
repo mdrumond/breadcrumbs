@@ -1,0 +1,48 @@
+{
+  "id": "all-node-kinds",
+  "title": "Kinds Reference Trail",
+  "description": "Demonstrates each supported breadcrumb node kind.",
+  "nodes": [
+    {
+      "id": "observe",
+      "label": "Capture Observation",
+      "kind": "observation",
+      "description": "Record an initial signal from logs or monitoring dashboards.",
+      "timestamp": "2024-12-05T10:00:00.000Z"
+    },
+    {
+      "id": "analyze",
+      "label": "Analyze Data",
+      "kind": "analysis",
+      "description": "Dig into metrics to isolate the scope of the issue.",
+      "timestamp": "2024-12-05T10:10:00.000Z",
+      "tags": ["metrics"]
+    },
+    {
+      "id": "decide",
+      "label": "Decide Mitigation",
+      "kind": "decision",
+      "description": "Choose the mitigation path after evaluating impact.",
+      "timestamp": "2024-12-05T10:20:00.000Z"
+    },
+    {
+      "id": "task",
+      "label": "Assign Task",
+      "kind": "task",
+      "description": "Delegate remediation actions to the owning team.",
+      "timestamp": "2024-12-05T10:30:00.000Z",
+      "tags": ["remediation"]
+    },
+    {
+      "id": "reference",
+      "label": "Attach Reference",
+      "kind": "reference",
+      "description": "Link to external documentation or runbooks supporting the work.",
+      "timestamp": "2024-12-05T10:40:00.000Z",
+      "tags": ["docs"],
+      "metadata": {
+        "url": "https://example.com/runbook"
+      }
+    }
+  ]
+}

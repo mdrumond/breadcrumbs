@@ -15,6 +15,7 @@ const sampleTrail = parseBreadcrumbTrail({
     {
       id: 'first',
       label: 'Start',
+      kind: 'observation',
       description: 'Open the project dashboard.',
       timestamp: '2024-01-01T10:00:00.000Z',
       tags: ['dashboard']
@@ -22,6 +23,7 @@ const sampleTrail = parseBreadcrumbTrail({
     {
       id: 'second',
       label: 'Inspect logs',
+      kind: 'analysis',
       timestamp: '2024-01-01T10:05:00.000Z',
       tags: ['logs', 'analysis'],
       metadata: { severity: 'info' }
@@ -37,7 +39,7 @@ describe('parseBreadcrumbTrail', () => {
       parseBreadcrumbTrail({
         id: 'demo',
         title: 'bad',
-        nodes: [{ id: 'n1', label: 42 } as unknown]
+        nodes: [{ id: 'n1', label: 42, kind: 'observation' } as unknown]
       })
     ).toThrow();
   });

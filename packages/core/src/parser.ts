@@ -1,6 +1,19 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { BreadcrumbNode, BreadcrumbTrail, TrailFileDescriptor } from './types.js';
+import type {
+  BreadcrumbNode,
+  BreadcrumbNodeKind,
+  BreadcrumbTrail,
+  TrailFileDescriptor
+} from './types.js';
+
+const SUPPORTED_NODE_KINDS: ReadonlySet<BreadcrumbNodeKind> = new Set([
+  'observation',
+  'analysis',
+  'decision',
+  'task',
+  'reference'
+]);
 
 /**
  * Determine whether a value is a plain object.
@@ -28,12 +41,22 @@ function parseNode(raw: unknown): BreadcrumbNode {
   if (!isRecord(raw)) {
     throw new Error('Breadcrumb node must be an object.');
   }
-  const { id, label, description, timestamp, tags, metadata } = raw;
+  const { id, label, kind, description, timestamp, tags, metadata } = raw;
   if (typeof id !== 'string' || id.length === 0) {
     throw new Error('Breadcrumb node is missing a string id.');
   }
   if (typeof label !== 'string' || label.length === 0) {
     throw new Error(`Breadcrumb node "${id}" is missing a string label.`);
+  }
+  if (typeof kind !== 'string') {
+    throw new Error(`Breadcrumb node "${id}" is missing a string kind.`);
+  }
+  if (!SUPPORTED_NODE_KINDS.has(kind as BreadcrumbNodeKind)) {
+    throw new Error(
+      `Breadcrumb node "${id}" has unsupported kind "${kind}". Expected one of: ${Array.from(
+        SUPPORTED_NODE_KINDS
+      ).join(', ')}`
+    );
   }
   if (timestamp !== undefined) {
     if (typeof timestamp !== 'string') {
@@ -61,6 +84,7 @@ function parseNode(raw: unknown): BreadcrumbNode {
   return {
     id,
     label,
+    kind: kind as BreadcrumbNodeKind,
     description,
     timestamp,
     tags: normalizedTags,

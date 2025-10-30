@@ -22,6 +22,7 @@ const trail: BreadcrumbTrail = parseBreadcrumbTrail({
     {
       id: 'start',
       label: 'Open repo',
+      kind: 'observation',
       description: 'Clone the repository.',
       timestamp: '2024-05-01T10:00:00.000Z',
       tags: ['setup']
@@ -29,6 +30,7 @@ const trail: BreadcrumbTrail = parseBreadcrumbTrail({
     {
       id: 'inspect',
       label: 'Inspect config',
+      kind: 'analysis',
       timestamp: '2024-05-01T10:05:00.000Z',
       tags: ['analysis']
     }

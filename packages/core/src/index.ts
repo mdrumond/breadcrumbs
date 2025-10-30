@@ -1,4 +1,5 @@
 export type {
+  BreadcrumbNodeKind,
   BreadcrumbNode,
   BreadcrumbTrail,
   TrailSummary,
