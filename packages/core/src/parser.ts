@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { BreadcrumbNode, BreadcrumbTrail, TrailFileDescriptor } from './types.ts';
+import type { BreadcrumbNode, BreadcrumbTrail, TrailFileDescriptor } from './types.js';
 
 /**
  * Determine whether a value is a plain object.

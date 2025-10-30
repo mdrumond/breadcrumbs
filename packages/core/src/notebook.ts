@@ -1,5 +1,5 @@
-import type { BreadcrumbTrail, NotebookCellData, NotebookDocumentData } from './types.ts';
-import { summarizeTrail, formatTrailSummary } from './summary.ts';
+import type { BreadcrumbTrail, NotebookCellData, NotebookDocumentData } from './types.js';
+import { summarizeTrail, formatTrailSummary } from './summary.js';
 
 /**
  * Convert a breadcrumb trail into a markdown representation.

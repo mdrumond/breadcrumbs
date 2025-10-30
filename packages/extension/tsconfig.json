@@ -4,15 +4,13 @@
     "composite": true,
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["vscode"],
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "types": ["vscode", "node", "global"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2020",
     "lib": ["ES2020"],
     "sourceMap": true
   },
   "include": ["src"],
-  "references": [
-    { "path": "../core" }
-  ]
+  "references": [{ "path": "../core" }]
 }

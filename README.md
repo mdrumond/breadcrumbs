@@ -10,9 +10,12 @@ Developer tools for exploring breadcrumb trails through a VS Code extension and 
 
 ## Scripts
 
+- `npm run lint` – Run ESLint (with a built-in fallback checker) plus a Prettier verification that falls back to newline/trailing whitespace and JSON formatting checks when the CLI is unavailable.
+- `npm run test` – Execute the lightweight Vitest-compatible harness bundled with the repo.
 - `npm run verify` – Run lint, type-check, and tests across the workspace.
 - `npm run build` – Compile all packages.
 - `npm run clean` – Remove build artifacts.
+- `npm run format` – Format the repository using Prettier (requires the Prettier CLI to be installed).
 
 ## Development
 
@@ -22,6 +25,17 @@ Install dependencies and verify the workspace:
 npm install
 npm run verify
 ```
+
+Lint, test, or build individual pieces during development:
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+The Vitest-compatible runner lives in `scripts/vitest.mjs` and uses the lightweight test utilities
+under `packages/vitest` so the workspace can execute in offline environments.
 
 Launch the extension using the **Run Extension** configuration (F5).
 
@@ -65,6 +79,11 @@ npm link --workspace @breadcrumbs/cli
 # breadcrumbs is now on your PATH
 breadcrumbs summarize /path/to/trail.crumb
 ```
+
+### Sample breadcrumb trails
+
+The repository ships with reference notes inside `.breadcrumbs/examples/`. These examples are used
+by the extension to populate the explorer and can be copied as a starting point for new trails.
 
 ### Git hooks
 

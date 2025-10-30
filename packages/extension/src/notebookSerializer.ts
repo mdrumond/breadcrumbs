@@ -1,11 +1,12 @@
 import { NotebookCellData, NotebookCellKind, NotebookData } from 'vscode';
-import type { BreadcrumbTrail } from '../../core/src/types.ts';
+import type { NotebookSerializer } from 'vscode';
+import type { BreadcrumbTrail } from '../../core/src/types.js';
 import { getCoreModule } from './coreProxy.js';
 
 /**
  * Notebook serializer that bridges breadcrumb trails with the VS Code notebook API.
  */
-export class BreadcrumbNotebookSerializer implements import('vscode').NotebookSerializer {
+export class BreadcrumbNotebookSerializer implements NotebookSerializer {
   /**
    * Deserialize notebook content into notebook cells.
    * @param content - Raw notebook content.
@@ -20,12 +21,13 @@ export class BreadcrumbNotebookSerializer implements import('vscode').NotebookSe
     const core = await getCoreModule();
     const trail = core.parseBreadcrumbTrail(raw);
     const notebook = core.trailToNotebook(trail);
-    const cells = notebook.cells.map((cell) =>
-      new NotebookCellData(
-        cell.kind === 'markdown' ? NotebookCellKind.Markdown : NotebookCellKind.Code,
-        cell.value,
-        cell.kind === 'markdown' ? 'markdown' : 'json'
-      )
+    const cells = notebook.cells.map(
+      (cell) =>
+        new NotebookCellData(
+          cell.kind === 'markdown' ? NotebookCellKind.Markdown : NotebookCellKind.Code,
+          cell.value,
+          cell.kind === 'markdown' ? 'markdown' : 'json'
+        )
     );
     const data = new NotebookData(cells);
     data.metadata = { trail } satisfies { trail: BreadcrumbTrail };

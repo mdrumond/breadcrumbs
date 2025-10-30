@@ -3,7 +3,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { parseBreadcrumbTrail } from '../../../core/src/index.ts';
+import { parseBreadcrumbTrail } from '../../../core/dist/index.js';
 import type { BreadcrumbTrail } from '../../../core/src/types.ts';
 import {
   describeTrail,
