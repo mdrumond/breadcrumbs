@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '../../../vitest/index.js';
 import {
   parseBreadcrumbTrail,
   summarizeTrail,

@@ -25,6 +25,7 @@ Set up the repository scaffolding and tooling required for a production-quality 
 
 - Expand ESLint rules to cover React/JSX files once UI components are introduced.
 - Add dedicated documentation for contributing guidelines and coding standards as the project matures beyond the initial scaffolding.
+- Expose the offline Vitest shim via a workspace alias or publish it under `node_modules` so tests can rely on the bare `vitest` specifier again.
 
 ## Required Tests
 
