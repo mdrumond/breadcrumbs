@@ -1,4 +1,9 @@
 /**
+ * Classification for a breadcrumb node that communicates its intent.
+ */
+export type BreadcrumbNodeKind = 'observation' | 'analysis' | 'decision' | 'task' | 'reference';
+
+/**
  * Describes an individual step within a breadcrumb trail.
  */
 export interface BreadcrumbNode {
@@ -10,6 +15,10 @@ export interface BreadcrumbNode {
    * Short human readable label that summarizes the step.
    */
   readonly label: string;
+  /**
+   * Classification that communicates the intent of the node.
+   */
+  readonly kind: BreadcrumbNodeKind;
   /**
    * Optional narrative that elaborates on the step.
    */

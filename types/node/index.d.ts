@@ -3,6 +3,8 @@ declare module 'node:path' {
   export function join(...segments: string[]): string;
   export function basename(path: string): string;
   export function extname(path: string): string;
+  export function dirname(path: string): string;
+  export function relative(from: string, to: string): string;
 }
 
 declare module 'node:fs/promises' {
@@ -20,13 +22,57 @@ declare module 'node:fs/promises' {
     data: string,
     options?: { encoding?: string } | string
   ): Promise<void>;
-  export function readdir(path: string, options?: ReaddirOptions): Promise<Dirent[]>;
+  export function readdir(path: string): Promise<string[]>;
+  export function readdir(path: string, options: { withFileTypes: true }): Promise<Dirent[]>;
+  export function readdir(path: string, options: ReaddirOptions): Promise<string[] | Dirent[]>;
   export function access(path: string): Promise<void>;
+  export function mkdir(path: string, options?: { recursive?: boolean }): Promise<void>;
+  export function rename(oldPath: string, newPath: string): Promise<void>;
+  export function unlink(path: string): Promise<void>;
+  export interface Stats {
+    readonly mtimeMs: number;
+  }
+  export function stat(path: string): Promise<Stats>;
   export function mkdtemp(prefix: string, options?: { encoding?: string }): Promise<string>;
   export function rm(
     path: string,
     options?: { recursive?: boolean; force?: boolean }
   ): Promise<void>;
+}
+
+declare namespace NodeJS {
+  interface ErrnoException extends Error {
+    code?: string;
+  }
+}
+
+declare module 'node:crypto' {
+  interface Hash {
+    update(data: string, inputEncoding?: string): Hash;
+    digest(encoding: 'hex'): string;
+  }
+  export function createHash(algorithm: string): Hash;
+  export function randomUUID(): string;
+}
+
+declare module 'node:child_process' {
+  export interface ExecFileOptions {
+    cwd?: string;
+  }
+  export interface ExecFileResult {
+    stdout: string;
+    stderr: string;
+  }
+  export function execFile(
+    file: string,
+    args: readonly string[],
+    options: ExecFileOptions,
+    callback: (error: Error | null, stdout: string, stderr: string) => void
+  ): void;
+}
+
+declare module 'node:util' {
+  export function promisify<T extends (...args: any[]) => void>(fn: T): (...args: any[]) => Promise<any>;
 }
 
 declare module 'node:assert/strict' {

@@ -1,0 +1,22 @@
+{
+  "name": "@breadcrumbs/notebook-data",
+  "version": "0.0.0",
+  "description": "Filesystem-backed notebook data layer with schema validation and indexing utilities.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@breadcrumbs/core": "workspace:*"
+  }
+}

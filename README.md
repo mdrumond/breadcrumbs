@@ -5,6 +5,7 @@ Developer tools for exploring breadcrumb trails through a VS Code extension and 
 ## Packages
 
 - `@breadcrumbs/core` – Shared models and utilities.
+- `@breadcrumbs/notebook-data` – Filesystem-backed note, chain, and index management helpers.
 - `@breadcrumbs/cli` – Command line interface for inspecting breadcrumb files.
 - `breadcrumbs-extension` – VS Code extension with notebook, panel, and explorer integrations.
 
@@ -80,10 +81,31 @@ npm link --workspace @breadcrumbs/cli
 breadcrumbs summarize /path/to/trail.crumb
 ```
 
+### Notebook data layer
+
+The `@breadcrumbs/notebook-data` package defines the canonical data model for notes, chains, and
+the derived index stored under `.breadcrumbs/`.
+
+- **Notes** live in `.breadcrumbs/notes/<id>.md` and combine YAML frontmatter with markdown body
+  content and an optional fenced code snippet. Frontmatter runs through lightweight schema validators, ensuring
+  well-formed identifiers, ISO timestamps, and one of the supported node kinds
+  (`observation`, `analysis`, `decision`, `task`, or `reference`). Snippet metadata captures the
+  SHA-256 hash, source language, optional repository path, and the commit hash produced via
+  `git rev-parse`.
+- **Chains** are stored in `.breadcrumbs/chains/<id>.chain.md` and reference ordered note IDs. They
+  provide backlinks for the index manager and support additional markdown commentary.
+- The **index manager** rebuilds `.breadcrumbs/index.json` atomically, computes backlinks between
+  chains and notes, caches file modification signatures to skip redundant work, and embeds an
+  integrity checksum derived from the current note and chain metadata.
+
+Utilities for snippet hashing, conflict detection, and commit anchoring are exposed for the CLI and
+extension workflows that need to guard against stale edits.
+
 ### Sample breadcrumb trails
 
-The repository ships with reference notes inside `.breadcrumbs/examples/`. These examples are used
-by the extension to populate the explorer and can be copied as a starting point for new trails.
+The repository ships with reference trails inside `.breadcrumbs/examples/`. These examples are used
+by the extension to populate the explorer and can be copied as a starting point for new trails. The
+`all-node-kinds.crumbnb` example exercises every supported node kind.
 
 ### Git hooks
 

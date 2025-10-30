@@ -13,6 +13,7 @@ export const productTriageTrail: BreadcrumbTrail = {
     {
       id: 'collect-alerts',
       label: 'Collect Alerts',
+      kind: 'observation',
       description: 'Open the alert dashboard and export the most recent incidents.',
       timestamp: '2024-12-02T09:05:00.000Z',
       tags: ['alerts', 'dashboard'],
@@ -24,6 +25,7 @@ export const productTriageTrail: BreadcrumbTrail = {
     {
       id: 'cluster-errors',
       label: 'Cluster Incidents',
+      kind: 'analysis',
       description: 'Group incidents by service and severity to spot patterns.',
       timestamp: '2024-12-02T09:15:00.000Z',
       tags: ['analysis'],
@@ -35,6 +37,7 @@ export const productTriageTrail: BreadcrumbTrail = {
     {
       id: 'draft-actions',
       label: 'Draft Mitigations',
+      kind: 'task',
       description: 'Outline mitigation steps and assign owners in the triage document.',
       timestamp: '2024-12-02T09:30:00.000Z',
       tags: ['mitigation', 'planning'],

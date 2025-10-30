@@ -10,6 +10,7 @@ dist
 # Generated workspace artifacts
 packages/**/out
 packages/**/dist
+packages/**/tsconfig.tsbuildinfo
 
 # npm debug logs
 npm-debug.log*
